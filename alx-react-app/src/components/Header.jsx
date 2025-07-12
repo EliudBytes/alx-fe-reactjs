@@ -1,4 +1,4 @@
-// src/Header.jsx
+// src/components/Header.jsx
 function Header() {
     return (
       <header>
@@ -8,3 +8,4 @@ function Header() {
   }
   
   export default Header;
+  

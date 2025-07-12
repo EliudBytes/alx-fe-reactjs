@@ -1,4 +1,4 @@
-// src/MainContent.jsx
+// src/components/MainContent.jsx
 function MainContent() {
     return (
       <main>
@@ -8,3 +8,4 @@ function MainContent() {
   }
   
   export default MainContent;
+  

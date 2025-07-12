@@ -1,4 +1,4 @@
-// src/Footer.jsx
+// src/components/Footer.jsx
 function Footer() {
     return (
       <footer>
@@ -8,3 +8,4 @@ function Footer() {
   }
   
   export default Footer;
+  
