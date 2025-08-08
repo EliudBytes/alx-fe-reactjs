@@ -1,21 +1,20 @@
-import React from 'react';
+import React from "react";
 
-function UserProfile({ user }) {
+function UserProfile() {
   return (
-    <div className="mx-auto p-4 sm:p-4 md:p-8 max-w-xs sm:max-w-xs md:max-w-sm bg-white rounded shadow">
+    <div className="bg-white p-6 rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 ease-in-out max-w-sm mx-auto">
       <img
-        src={user.avatar}
-        alt={`${user.name}'s avatar`}
-        className="rounded-full mx-auto w-24 h-24 sm:w-24 sm:h-24 md:w-36 md:h-36 object-cover"
+        src="profile.jpg"  // Replace with your actual image path or URL
+        alt="Profile"
+        className="rounded-full mx-auto w-32 h-32 hover:scale-110 transition-transform duration-300 ease-in-out"
       />
-      <h1 className="mt-4 text-center font-bold text-lg sm:text-lg md:text-xl text-gray-900">
-        {user.name}
-      </h1>
-      <p className="mt-2 text-center text-gray-700 text-sm sm:text-sm md:text-base">
-        {user.bio}
-      </p>
+      <h2 className="text-xl font-bold mt-4 text-center hover:text-blue-500 transition-colors duration-300 ease-in-out">
+        John Doe  {/* Replace with actual user name or prop */}
+      </h2>
+      {/* Add other profile details here */}
     </div>
   );
 }
 
 export default UserProfile;
+
