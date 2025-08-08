@@ -1,21 +1,20 @@
-// src/services/githubService.test.js
-import axios from 'axios';
-import { fetchUserData } from './githubService';
+import axios from "axios";
 
-jest.mock('axios');
+const BASE_URL = "https://api.github.com/search/users";
 
-describe('fetchUserData', () => {
-  it('calls the correct GitHub API endpoint and returns data', async () => {
-    const mockData = { login: 'octocat' };
-    axios.get.mockResolvedValue({ data: mockData });
+export const searchUsers = async ({ username, location, minRepos }) => {
+  try {
+    let query = "";
 
-    const result = await fetchUserData('octocat');
+    if (username) query += `${username} in:login `;
+    if (location) query += `location:${location} `;
+    if (minRepos) query += `repos:>=${minRepos}`;
 
-    expect(axios.get).toHaveBeenCalledWith('https://api.github.com/users/octocat');
-    expect(result).toEqual(mockData);
-  });
+    const response = await axios.get(`${BASE_URL}?q=${query}&per_page=20`);
+    return response.data.items;
+  } catch (error) {
+    console.error("Error fetching users:", error);
+    return [];
+  }
+};
 
-  it('throws when username is empty', async () => {
-    await expect(fetchUserData('')).rejects.toThrow();
-  });
-});

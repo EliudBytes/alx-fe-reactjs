@@ -1,67 +1,59 @@
-// src/components/Search.jsx
-import React, { useState } from 'react';
-import { fetchUserData } from '../services/githubService';
+import React, { useState } from "react";
 
-export default function Search() {
-  const [query, setQuery] = useState('');
-  const [user, setUser] = useState(null);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
+const Search = ({ onSearch }) => {
+  const [username, setUsername] = useState("");
+  const [location, setLocation] = useState("");
+  const [minRepos, setMinRepos] = useState("");
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-    const username = query.trim();
-    if (!username) return;
-
-    setLoading(true);
-    setError(null);
-    setUser(null);
-
-    try {
-      const data = await fetchUserData(username);
-      setUser(data);
-    } catch (err) {
-      // EXACT error message expected by ALX checker
-      setError('Looks like we cant find the user');
-    } finally {
-      setLoading(false);
-    }
+    onSearch({ username, location, minRepos });
   };
 
   return (
-    <div style={{ maxWidth: 640, margin: '2rem auto', padding: '0 1rem' }}>
-      <form onSubmit={handleSubmit} style={{ display: 'flex', gap: 8 }}>
-        <input
-          aria-label="github-username"
-          placeholder="Enter GitHub username"
-          value={query}
-          onChange={(e) => setQuery(e.target.value)}
-          style={{ flex: 1, padding: '8px 12px' }}
-        />
-        <button type="submit" style={{ padding: '8px 12px' }}>Search</button>
-      </form>
+    <form
+      onSubmit={handleSubmit}
+      className="bg-white shadow-lg rounded-lg p-6 flex flex-col gap-4 max-w-lg mx-auto mt-8"
+    >
+      <h2 className="text-2xl font-bold text-center">GitHub User Search</h2>
 
-      <div style={{ marginTop: 20 }}>
-        {loading && <p>Loading...</p>}
-        {error && <p>{error}</p>}
+      {/* Username */}
+      <input
+        type="text"
+        placeholder="Search by username"
+        value={username}
+        onChange={(e) => setUsername(e.target.value)}
+        className="border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
+      />
 
-        {user && (
-          <div style={{ marginTop: 12, textAlign: 'center' }}>
-            <img
-              src={user.avatar_url}
-              alt={user.login}
-              width="120"
-              style={{ borderRadius: 8 }}
-            />
-            <h3>{user.name || user.login}</h3>
-            {user.bio && <p>{user.bio}</p>}
-            <p>
-              <a href={user.html_url} target="_blank" rel="noreferrer">View Profile</a>
-            </p>
-          </div>
-        )}
-      </div>
-    </div>
+      {/* Location */}
+      <input
+        type="text"
+        placeholder="Location (e.g., Nairobi)"
+        value={location}
+        onChange={(e) => setLocation(e.target.value)}
+        className="border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
+      />
+
+      {/* Min Repos */}
+      <input
+        type="number"
+        placeholder="Minimum Repositories"
+        value={minRepos}
+        onChange={(e) => setMinRepos(e.target.value)}
+        className="border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
+      />
+
+      {/* Submit */}
+      <button
+        type="submit"
+        className="bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600 transition"
+      >
+        Search
+      </button>
+    </form>
   );
-}
+};
+
+export default Search;
 
